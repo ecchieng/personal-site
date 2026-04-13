@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ethan Chieng — Bioengineering, Research, Clinical, Teaching" />
+  <meta name="theme-color" content="#fafaf8" />
+
+  <!-- Custom domain ready: update these when you move off GitHub Pages -->
+  <meta property="og:title" content="Ethan Chieng" />
+  <meta property="og:description" content="Bioengineering, Research, Clinical, Teaching" />
+  <meta property="og:type" content="website" />
+  <!-- <meta property="og:url" content="https://yourdomain.com" /> -->
+  <!-- <link rel="canonical" href="https://yourdomain.com" /> -->
+
+  <title>Ethan Chieng</title>
+
+  <!-- Google Fonts: Fraunces (display/headings) + Lato (clean body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES (Design Tokens)
+       ============================================================
+       SWAP YOUR PALETTE HERE — change these variables and the
+       whole site updates automatically.
+       ------------------------------------------------------------ */
+    :root {
+      /* -- Backgrounds -- */
+      --bg-base:        #fafaf8;   /* off-white page background */
+      --bg-surface:     #f3f3f0;   /* cards, panels */
+      --bg-elevated:    #eaeae6;   /* hover states, image placeholders */
+      --bg-subtle:      #ddddd8;   /* borders, dividers */
+
+      /* -- Accent (slate blue) -- */
+      --accent-primary:   #4a6fa5; /* slate blue — main accent (SWAP ME) */
+      --accent-light:     #e8eef6; /* very light tint for backgrounds */
+      --accent-glow:      rgba(74, 111, 165, 0.1);
+
+      /* -- Text -- */
+      --text-primary:   #1a1a18;
+      --text-secondary: #5a5a55;
+      --text-muted:     #9a9a93;
+
+      /* -- Typography -- */
+      --font-display: 'Fraunces', serif;
+      --font-body:    'Lato', sans-serif;
+
+      /* -- Spacing & shape -- */
+      --section-gap: 110px;
+      --card-radius: 10px;
+      --transition:  0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.75;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent-primary); text-decoration: none; transition: opacity var(--transition); }
+    a:hover { opacity: 0.7; }
+
+    img { display: block; width: 100%; object-fit: cover; }
+
+    /* ============================================================
+       LAYOUT HELPERS
+       ============================================================ */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    section { padding: var(--section-gap) 0; }
+
+    /* Thin ruled line above section label */
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-primary);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 52px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    /* Subtle horizontal rule above each section label */
+    .section-rule {
+      width: 40px;
+      height: 1.5px;
+      background: var(--accent-primary);
+      margin-bottom: 16px;
+      opacity: 0.6;
+    }
+
+    /* ============================================================
+       NAV
+       ============================================================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250, 250, 248, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--bg-subtle);
+    }
+
+    .nav-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+      transition: color var(--transition);
+    }
+
+    .nav-links a:hover { color: var(--accent-primary); opacity: 1; }
+
+    /* Resume & CV pill badges in nav */
+    .nav-badge {
+      background: var(--accent-light) !important;
+      border: 1px solid rgba(74,111,165,0.2) !important;
+      border-radius: 100px !important;
+      padding: 4px 14px !important;
+      color: var(--accent-primary) !important;
+      font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      transition: background var(--transition) !important;
+    }
+    .nav-badge:hover {
+      background: rgba(74,111,165,0.18) !important;
+      opacity: 1 !important;
+    }
+
+    /* Mobile nav toggle */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    @media (max-width: 680px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 58px; left: 0; right: 0;
+        background: rgba(250,250,248,0.98);
+        flex-direction: column;
+        gap: 0;
+        padding: 12px 0 20px;
+        border-bottom: 1px solid var(--bg-subtle);
+        transform: translateY(-120%);
+        transition: transform var(--transition);
+      }
+      .nav-links.open { transform: translateY(0); }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 11px 28px; font-size: 0.9rem; }
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 58px;
+      border-bottom: 1px solid var(--bg-subtle);
+    }
+
+    .hero-content { max-width: 680px; }
+
+    .hero-greeting {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-primary);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 9vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.25s forwards;
+    }
+
+    /* Italicise last name for a Fraunces personality touch */
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent-primary);
+    }
+
+    .hero-tagline {
+      font-size: 1.08rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin-bottom: 44px;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.55s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 12px 26px;
+      border-radius: 6px;
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: #ffffff;
+      border: 1.5px solid var(--accent-primary);
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent-primary);
+      border: 1.5px solid rgba(74,111,165,0.35);
+    }
+    .btn-outline:hover {
+      background: var(--accent-light);
+      border-color: var(--accent-primary);
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      animation: fadeIn 1s 1.2s forwards;
+    }
+    .scroll-hint span {
+      font-family: var(--font-body);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .scroll-arrow {
+      width: 18px;
+      height: 18px;
+      border-right: 1.5px solid var(--text-muted);
+      border-bottom: 1.5px solid var(--text-muted);
+      transform: rotate(45deg);
+      animation: bounce 1.6s infinite;
+    }
+
+    /* ============================================================
+       ABOUT
+       ============================================================ */
+    #about { background: var(--bg-base); }
+
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 52px;
+      align-items: start;
+    }
+
+    .about-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1.5px solid var(--bg-subtle);
+      background: var(--bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* Placeholder silhouette */
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 110px; height: 110px;
+      background: var(--bg-subtle);
+      border-radius: 50% 50% 0 0;
+    }
+    .about-photo::before {
+      content: '';
+      position: absolute;
+      top: 44px; left: 50%;
+      transform: translateX(-50%);
+      width: 58px; height: 58px;
+      background: var(--bg-subtle);
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .photo-label {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .about-text p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .chip {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--bg-subtle);
+      color: var(--text-secondary);
+      background: var(--bg-surface);
+    }
+
+    @media (max-width: 600px) {
+      #about .about-grid { grid-template-columns: 1fr; }
+      .about-photo { margin: 0 auto; }
+    }
+
+    /* ============================================================
+       EXPERIENCE TABS
+       ============================================================ */
+    #experience { background: var(--bg-surface); }
+
+    .tab-nav {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 36px;
+      background: var(--bg-elevated);
+      border-radius: 8px;
+      padding: 4px;
+      width: fit-content;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 8px 20px;
+      border-radius: 5px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .tab-btn:hover { color: var(--text-primary); background: var(--bg-base); }
+
+    .tab-btn.active {
+      background: var(--accent-primary);
+      color: #ffffff;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: grid; gap: 18px; }
+
+    /* Experience cards */
+    .exp-card {
+      background: var(--bg-base);
+      border: 1px solid var(--bg-subtle);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .exp-card:hover {
+      border-color: rgba(74,111,165,0.3);
+      box-shadow: 0 4px 20px rgba(74,111,165,0.07);
+    }
+
+    .exp-img {
+      background: var(--bg-elevated);
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px;
+      border-right: 1px solid var(--bg-subtle);
+      flex-shrink: 0;
+    }
+
+    .exp-img-icon { font-size: 1.8rem; opacity: 0.35; }
+
+    .exp-img-label {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .exp-body { padding: 22px 26px; }
+
+    .exp-meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .exp-org {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-primary);
+    }
+
+    .exp-dates {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .exp-role {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .exp-bullets li {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .exp-bullets li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--accent-primary);
+    }
+
+    @media (max-width: 600px) {
+      .exp-card { grid-template-columns: 1fr; }
+      .exp-img { min-height: 90px; border-right: none; border-bottom: 1px solid var(--bg-subtle); }
+    }
+
+    /* ============================================================
+       HOBBIES
+       ============================================================ */
+    #hobbies { background: var(--bg-base); }
+
+    .hobbies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: 16px;
+    }
+
+    .hobby-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--bg-subtle);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+
+    .hobby-card:hover {
+      border-color: rgba(74,111,165,0.3);
+      box-shadow: 0 4px 16px rgba(74,111,165,0.08);
+      transform: translateY(-2px);
+    }
+
+    .hobby-img-area {
+      height: 130px;
+      background: var(--bg-elevated);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hobby-emoji { font-size: 2.2rem; }
+
+    .hobby-placeholder-txt {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* Hover overlay */
+    .hobby-img-area::after {
+      content: 'view photo';
+      position: absolute;
+      inset: 0;
+      background: rgba(74,111,165,0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .hobby-card:hover .hobby-img-area::after { opacity: 1; }
+
+    .hobby-name {
+      padding: 11px 16px;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* ============================================================
+       LIGHTBOX
+       ============================================================ */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(26,26,24,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      backdrop-filter: blur(4px);
+    }
+
+    .lightbox.open { opacity: 1; pointer-events: all; }
+
+    .lightbox-inner {
+      background: var(--bg-base);
+      border: 1px solid var(--bg-subtle);
+      border-radius: 14px;
+      overflow: hidden;
+      max-width: 540px;
+      width: 100%;
+      transform: scale(0.94);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .lightbox.open .lightbox-inner { transform: scale(1); }
+
+    .lightbox-img-area {
+      height: 300px;
+      background: var(--bg-elevated);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .lightbox-emoji { font-size: 3.5rem; }
+
+    .lightbox-placeholder-txt {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .lightbox-footer {
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--bg-subtle);
+    }
+
+    .lightbox-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .lightbox-close {
+      background: var(--bg-surface);
+      border: 1px solid var(--bg-subtle);
+      border-radius: 7px;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      transition: all var(--transition);
+    }
+    .lightbox-close:hover { background: var(--bg-elevated); color: var(--text-primary); }
+
+    /* ============================================================
+       CONTACT
+       ============================================================ */
+    #contact { background: var(--bg-surface); }
+
+    #contact .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .contact-info p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      font-size: 1rem;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+
+    .contact-link-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .contact-link-item svg {
+      width: 15px; height: 15px;
+      color: var(--accent-primary);
+      flex-shrink: 0;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+    .form-group label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg-base);
+      border: 1px solid var(--bg-subtle);
+      border-radius: 6px;
+      padding: 11px 15px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      transition: border-color var(--transition);
+      outline: none;
+      resize: none;
+      width: 100%;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--accent-primary); }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-muted); }
+
+    .form-group textarea { height: 136px; }
+
+    .btn-submit {
+      align-self: flex-start;
+      background: var(--accent-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 28px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    @media (max-width: 700px) {
+      #contact .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      padding: 36px 0;
+      border-top: 1px solid var(--bg-subtle);
+      text-align: center;
+    }
+
+    footer p {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50%       { transform: rotate(45deg) translateY(5px); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .nav-links a.active-section { color: var(--accent-primary); font-weight: 700; }
+
+    /* ============================================================
+   EXPERIENCE FILTER (replaces tabs)
+   ============================================================ */
+    .filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+    }
+
+    .filter-btn {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 7px 18px;
+    border-radius: 100px;
+    border: 1.5px solid var(--bg-subtle);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--transition);
+    }
+
+    .filter-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    }
+
+    .filter-btn.active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #ffffff;
+    }
+
+    .exp-list { display: grid; gap: 18px; }
+
+    .exp-card.hidden { display: none; }
+
+    /* Category badges on each card */
+    .exp-meta-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    }
+
+    .category-badge {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    }
+
+    .category-badge.clinical  { background: #e8f4f0; color: #2a7a5e; }
+    .category-badge.research  { background: #e8eef6; color: #2a4a7a; }
+    .category-badge.teaching  { background: #f6ece8; color: #7a3a2a; }
+    .category-badge.other     { background: #f0edf6; color: #4a2a7a; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAV
+       ============================================================ -->
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-logo">Ethan Chieng</span>
+      <button class="nav-toggle" aria-label="Toggle menu" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#hobbies">Hobbies</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <!--
+          TODO: Replace the # hrefs below with your actual Google Drive share links.
+          Make sure your Drive files are set to "Anyone with the link can view."
+        -->
+        <li><a href="#" target="_blank" rel="noopener" class="nav-badge">Resume ↗</a></li>
+        <li><a href="#" target="_blank" rel="noopener" class="nav-badge">CV ↗</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-greeting">Hi there! My name' s</p>
+        <h1 class="hero-name">Ethan<br /><em>Chieng</em></h1>
+        <p class="hero-tagline">
+          <!-- TODO: Replace with your own tagline / intro blurb -->
+          Bioengineering grad, researcher, medical assistant, educator. Interested in the places where engineering, medicine, and teaching meet.
+        </p>
+        <div class="hero-ctas">
+          <a href="#about" class="btn btn-primary">About me</a>
+          <a href="#contact" class="btn btn-outline">Get in touch</a>
+        </div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>scroll</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT
+       ============================================================ -->
+  <section id="about">
+    <div class="container reveal">
+      <p class="section-label">01 / About</p>
+      <h2 class="section-title">who I am</h2>
+
+      <div class="about-grid">
+        <!-- Photo -->
+        <div>
+          <!--
+            TODO: To add your photo, replace the <div class="about-photo"> below with:
+            <img src="your-photo.jpg" alt="Ethan Chieng" style="width:200px;height:200px;border-radius:50%;object-fit:cover;border:2px solid var(--bg-subtle);" />
+            Make sure the image file is in the same folder as index.html.
+          -->
+          <div class="about-photo"></div>
+          <p class="photo-label">[ your photo here ]</p>
+        </div>
+
+        <!-- Bio text -->
+        <div class="about-text">
+          <!--
+            TODO: Replace the placeholder paragraphs below with your own bio.
+            Keep it casual — write it like you'd introduce yourself to a new coworker.
+          -->
+          <p>
+            Hey, I'm Ethan. I'm a bioengineering grad from UC Berkeley with a pretty wide range of experience — clinical work in pediatrics, ML research, wet lab, and a whole lot of teaching.
+          </p>
+          <p>
+            I care a lot about making complex things understandable, whether that's explaining a diagnosis to a patient, debugging a model, or helping a student work through a tough concept.
+          </p>
+          <p>
+            Currently working as a medical assistant at a pediatric clinic in SF while figuring out what's next. Always down to chat about research, medicine, or anything interesting.
+          </p>
+
+          <!-- Skill chips — add/remove as you like -->
+          <div class="about-chips">
+            <span class="chip">Python</span>
+            <span class="chip">Machine Learning</span>
+            <span class="chip">Django</span>
+            <span class="chip">HTML / CSS</span>
+            <span class="chip">Google Apps Script</span>
+            <span class="chip">PCR</span>
+            <span class="chip">FACS</span>
+            <span class="chip">EHR</span>
+            <span class="chip">BLS Certified</span>
+            <span class="chip">Mandarin</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXPERIENCE
+       ============================================================ -->
+  <section id="experience">
+    <div class="container reveal">
+      <p class="section-label">02 / Experience</p>
+      <h2 class="section-title">what I've done</h2>
+
+      <!-- Filter pills -->
+      <div class="filter-nav">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="clinical">Clinical</button>
+        <button class="filter-btn" data-filter="research">Research</button>
+        <button class="filter-btn" data-filter="teaching">Teaching</button>
+        <button class="filter-btn" data-filter="other">Other</button>
+      </div>
+
+      <!-- All cards, sorted by start date (most recent first) -->
+      <div class="exp-list">
+
+        <!-- Sanford Institute — Dec 2025 -->
+        <div class="exp-card" data-category="research">
+          <div class="exp-img">
+            <span class="exp-img-icon">🧠</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">Sanford Institute, UCSD</span>
+              <div class="exp-meta-right">
+                <span class="category-badge research">Research</span>
+                <span class="exp-dates">Dec 2025 – Present</span>
+              </div>
+            </div>
+            <p class="exp-role">Research Assistant — Empathy &amp; Compassion</p>
+            <ul class="exp-bullets">
+              <li>Collaborated with Dr. Gregory Depow to design survey instruments and edit instructional videos for an ongoing RCT on empathy training in medical practitioners</li>
+              <li>Led development of the active control condition: a multimodal patient safety curriculum covering systems thinking and near-miss reporting frameworks</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Reading Partners — Jan 2026 -->
+        <div class="exp-card" data-category="teaching">
+          <div class="exp-img">
+            <span class="exp-img-icon">📖</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">Reading Partners, San Francisco</span>
+              <div class="exp-meta-right">
+                <span class="category-badge teaching">Teaching</span>
+                <span class="exp-dates">Jan 2026 – Present</span>
+              </div>
+            </div>
+            <p class="exp-role">Reading Tutor</p>
+            <ul class="exp-bullets">
+              <li>Provide weekly 1-on-1 literacy tutoring to an elementary student reading below grade level, tracking progress through regular evaluations</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SF Bay Pediatrics — Jul 2024 -->
+        <div class="exp-card" data-category="clinical">
+          <div class="exp-img">
+            <span class="exp-img-icon">🏥</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">SF Bay Pediatrics</span>
+              <div class="exp-meta-right">
+                <span class="category-badge clinical">Clinical</span>
+                <span class="exp-dates">Jul 2024 – Present</span>
+              </div>
+            </div>
+            <p class="exp-role">Medical Assistant</p>
+            <ul class="exp-bullets">
+              <li>Delivered direct patient care for 20–40 pediatric patients daily: vitals, vaccines, and specimen processing across a broad developmental age range</li>
+              <li>Supported clinic operations through EHR documentation, referral coordination, and patient scheduling</li>
+              <li>Built a web tool to automate encounter form preparation and a Google Apps Script inventory system with low-stock alerts, both adopted clinic-wide</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- OrgChem TA — Jan 2025 (second semester listed separately, same role) -->
+        <div class="exp-card" data-category="teaching">
+          <div class="exp-img">
+            <span class="exp-img-icon">⚗️</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">College of Chemistry, UC Berkeley</span>
+              <div class="exp-meta-right">
+                <span class="category-badge teaching">Teaching</span>
+                <span class="exp-dates">Jan 2024 – May 2024 &amp; Jan 2025 – May 2025</span>
+              </div>
+            </div>
+            <p class="exp-role">Teaching Assistant — Organic Chemistry Lab</p>
+            <ul class="exp-bullets">
+              <li>Independently instructed sections of ~30 students per semester across two semesters (~80 students total)</li>
+              <li>Delivered pre-lab lectures, supervised experiments, and held office hours; graded reports with individualized feedback</li>
+              <li>Received above-average student evaluations across all Likert-scale categories relative to other TAs</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Swim Club — Aug 2023 -->
+        <div class="exp-card" data-category="other">
+          <div class="exp-img">
+            <span class="exp-img-icon">🏊</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">Swim Club at Berkeley</span>
+              <div class="exp-meta-right">
+                <span class="category-badge other">Other</span>
+                <span class="exp-dates">Aug 2023 – May 2024</span>
+              </div>
+            </div>
+            <p class="exp-role">Travel &amp; Logistics Coordinator</p>
+            <ul class="exp-bullets">
+              <li>Managed end-to-end travel logistics for a 150+ member competitive swim club: transport, accommodations, meet coordination, budget management</li>
+              <li>Occasionally led and designed practices in the absence of primary coaches</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- BEAM — Aug 2023 -->
+        <div class="exp-card" data-category="teaching">
+          <div class="exp-img">
+            <span class="exp-img-icon">🔬</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">BEAM, UC Berkeley</span>
+              <div class="exp-meta-right">
+                <span class="category-badge teaching">Teaching</span>
+                <span class="exp-dates">Aug 2023 – May 2024</span>
+              </div>
+            </div>
+            <p class="exp-role">Mentor — K-5 Science Education</p>
+            <ul class="exp-bullets">
+              <li>Delivered hands-on science lessons (electricity, kinetics, optics, fossilization) to ~15 fifth-graders at Achieve Academy, a Title I school</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- BioE Honors Society — Aug 2022 -->
+        <div class="exp-card" data-category="other">
+          <div class="exp-img">
+            <span class="exp-img-icon">🌐</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">BioE Honors Society, UC Berkeley</span>
+              <div class="exp-meta-right">
+                <span class="category-badge other">Other</span>
+                <span class="exp-dates">Aug 2022 – Dec 2023</span>
+              </div>
+            </div>
+            <p class="exp-role">Webmaster</p>
+            <ul class="exp-bullets">
+              <li>Maintained and improved the org's website using Django, HTML, and CSS — built new pages, refined UI/UX, resolved bugs</li>
+              <li>Created a concise onboarding guide for future webmasters to improve role continuity</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Fahy Lab — Oct 2022 -->
+        <div class="exp-card" data-category="research">
+          <div class="exp-img">
+            <span class="exp-img-icon">🫁</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">Fahy Lab, UCSF</span>
+              <div class="exp-meta-right">
+                <span class="category-badge research">Research</span>
+                <span class="exp-dates">Oct 2022 – Dec 2023</span>
+              </div>
+            </div>
+            <p class="exp-role">Researcher — Asthma Lab</p>
+            <ul class="exp-bullets">
+              <li>Developed a Mask R-CNN model under Dr. Brendan Huang to automate mucus plug detection on chest CT scans across 60 patients (~500 slices each), achieving 53% accuracy</li>
+              <li>Built a proof-of-concept RAG chatbot using Llama2-7B to assist in radiology report classification</li>
+              <li>Gained direct exposure to clinical research workflows through shadowing of patient surveys and spirometry data collection</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CAEE — Aug 2022 -->
+        <div class="exp-card" data-category="teaching">
+          <div class="exp-img">
+            <span class="exp-img-icon">📚</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">CAEE, UC Berkeley</span>
+              <div class="exp-meta-right">
+                <span class="category-badge teaching">Teaching</span>
+                <span class="exp-dates">Aug 2022 – Dec 2023</span>
+              </div>
+            </div>
+            <p class="exp-role">Undergraduate Peer Tutor</p>
+            <ul class="exp-bullets">
+              <li>Provided drop-in tutoring in bioengineering, biology, chemistry, and CS to ~100 students via 1-on-1 and small group sessions</li>
+              <li>Built recurring mentorship relationships with returning students beyond content instruction</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Nosis Bio — Jun 2022 -->
+        <div class="exp-card" data-category="research">
+          <div class="exp-img">
+            <span class="exp-img-icon">🧬</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">Nosis Bio</span>
+              <div class="exp-meta-right">
+                <span class="category-badge research">Research</span>
+                <span class="exp-dates">Jun 2022 – Dec 2022</span>
+              </div>
+            </div>
+            <p class="exp-role">Research Assistant</p>
+            <ul class="exp-bullets">
+              <li>Developed and optimized wet-lab protocols to validate protein constructs from an AI-driven therapeutic design platform</li>
+              <li>Engineered plasmid constructs in yeast and E. coli using Golden Gate, Gibson, and Homologous Recombination assembly; prepared samples for FACS analysis</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CS Mentors — Aug 2021 -->
+        <div class="exp-card" data-category="teaching">
+          <div class="exp-img">
+            <span class="exp-img-icon">💻</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">CS Mentors, UC Berkeley</span>
+              <div class="exp-meta-right">
+                <span class="category-badge teaching">Teaching</span>
+                <span class="exp-dates">Aug 2021 – Dec 2021</span>
+              </div>
+            </div>
+            <p class="exp-role">Junior Mentor — CS61A</p>
+            <ul class="exp-bullets">
+              <li>Led weekly small-group review sections of 6–10 students for Berkeley's large-enrollment intro CS course</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mathnasium — Aug 2020 -->
+        <div class="exp-card" data-category="teaching">
+          <div class="exp-img">
+            <span class="exp-img-icon">➕</span>
+            <span class="exp-img-label">[ add image ]</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-meta">
+              <span class="exp-org">Mathnasium, Garden Grove</span>
+              <div class="exp-meta-right">
+                <span class="category-badge teaching">Teaching</span>
+                <span class="exp-dates">Aug 2020 – Sep 2021</span>
+              </div>
+            </div>
+            <p class="exp-role">Math Tutor</p>
+            <ul class="exp-bullets">
+              <li>Developed original math curriculum for K-12 students across a wide range of skill levels</li>
+              <li>Took on administrative responsibilities including coordinating student scheduling and managing instructor timetables</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOBBIES
+       ============================================================ -->
+  <section id="hobbies">
+    <div class="container reveal">
+      <p class="section-label">03 / Hobbies</p>
+      <h2 class="section-title">outside of work</h2>
+
+      <!--
+        TODO: To add a real photo to a hobby card, replace the inner HTML of
+        .hobby-img-area with an <img> tag. Example for swimming:
+        <img src="swimming.jpg" alt="Swimming" style="width:100%;height:100%;object-fit:cover;" />
+        The lightbox will show the same image in a larger view.
+      -->
+      <div class="hobbies-grid">
+
+        <div class="hobby-card" data-hobby="Swimming" data-emoji="🏊">
+          <div class="hobby-img-area">
+            <span class="hobby-emoji">🏊</span>
+            <span class="hobby-placeholder-txt">[ add photo ]</span>
+          </div>
+          <p class="hobby-name">Swimming</p>
+        </div>
+
+        <div class="hobby-card" data-hobby="Video Games" data-emoji="🎮">
+          <div class="hobby-img-area">
+            <span class="hobby-emoji">🎮</span>
+            <span class="hobby-placeholder-txt">[ add photo ]</span>
+          </div>
+          <p class="hobby-name">Video Games</p>
+        </div>
+
+        <div class="hobby-card" data-hobby="My Dogs" data-emoji="🐕">
+          <div class="hobby-img-area">
+            <span class="hobby-emoji">🐕</span>
+            <span class="hobby-placeholder-txt">[ add photo ]</span>
+          </div>
+          <p class="hobby-name">My Dogs</p>
+        </div>
+
+        <div class="hobby-card" data-hobby="Reading" data-emoji="📖">
+          <div class="hobby-img-area">
+            <span class="hobby-emoji">📖</span>
+            <span class="hobby-placeholder-txt">[ add photo ]</span>
+          </div>
+          <p class="hobby-name">Reading</p>
+        </div>
+
+        <div class="hobby-card" data-hobby="Weightlifting" data-emoji="🏋️">
+          <div class="hobby-img-area">
+            <span class="hobby-emoji">🏋️</span>
+            <span class="hobby-placeholder-txt">[ add photo ]</span>
+          </div>
+          <p class="hobby-name">Weightlifting</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+       ============================================================ -->
+  <section id="contact">
+    <div class="container reveal">
+      <p class="section-label">04 / Contact</p>
+      <h2 class="section-title">get in touch</h2>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p>
+            Have a question, want to collaborate, or just want to say hi? Send me a message and I'll get back to you.
+          </p>
+          <div class="contact-links">
+            <div class="contact-link-item">
+              <!-- LinkedIn icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+              <a href="https://www.linkedin.com/in/ethan-chieng" target="_blank" rel="noopener">linkedin.com/in/ethan-chieng</a>
+            </div>
+          </div>
+        </div>
+
+        <!--
+          CONTACT FORM
+          How it works: when the user clicks Send, their default email client
+          (Gmail app, Apple Mail, etc.) opens with the message pre-filled.
+          No server required.
+          TODO: If you want silent in-browser sending later, swap this for
+          a Formspree endpoint (see https://formspree.io). The form fields
+          can stay the same — just change the JS in the script below.
+        -->
+        <div class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="contact-name">Name</label>
+            <input type="text" id="contact-name" placeholder="Your name" />
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Email</label>
+            <input type="email" id="contact-email" placeholder="your@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" placeholder="Your cool message..."></textarea>
+          </div>
+          <button class="btn-submit" id="sendBtn">Send message →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <div class="container">
+      <p>built by ethan chieng · <span id="year"></span></p>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       LIGHTBOX MODAL
+       ============================================================ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox-inner">
+      <div class="lightbox-img-area" id="lightboxImgArea">
+        <span class="lightbox-emoji" id="lightboxEmoji"></span>
+        <span class="lightbox-placeholder-txt">[ photo goes here ]</span>
+      </div>
+      <div class="lightbox-footer">
+        <span class="lightbox-title" id="lightboxTitle"></span>
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    // ── Footer year ──────────────────────────────────────────────
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ── Mobile nav toggle ────────────────────────────────────────
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    // Close nav when a link is clicked (mobile)
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+  // ── Experience filter pills ───────────────────────────────────
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const expCards   = document.querySelectorAll('.exp-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+
+      expCards.forEach(card => {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+    // ── Hobby lightbox ───────────────────────────────────────────
+    const lightbox      = document.getElementById('lightbox');
+    const lightboxEmoji = document.getElementById('lightboxEmoji');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('.hobby-card').forEach(card => {
+      card.addEventListener('click', () => {
+        lightboxEmoji.textContent = card.dataset.emoji;
+        lightboxTitle.textContent = card.dataset.hobby;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // ── Contact form → mailto ────────────────────────────────────
+    document.getElementById('sendBtn').addEventListener('click', () => {
+      const name    = document.getElementById('contact-name').value.trim();
+      const email   = document.getElementById('contact-email').value.trim();
+      const message = document.getElementById('contact-message').value.trim();
+
+      if (!name || !email || !message) {
+        alert('Please fill in all fields before sending.');
+        return;
+      }
+
+      // TODO: Replace ecchieng@gmail.com with whatever email you want to receive messages at
+      const to      = 'ecchieng@gmail.com';
+      const subject = encodeURIComponent(`Message from ${name} via your website`);
+      const body    = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
+
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    });
+
+    // ── Scroll reveal ────────────────────────────────────────────
+    // Fades sections in as you scroll down the page.
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target); // only animate once
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ── Active nav link on scroll ────────────────────────────────
+    // Highlights the nav link corresponding to the visible section.
+    const sections = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navAnchors.forEach(a => {
+            a.classList.toggle(
+              'active-section',
+              a.getAttribute('href') === '#' + entry.target.id
+            );
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => sectionObserver.observe(s));
+  </script>
+
+</body>
+</html>
