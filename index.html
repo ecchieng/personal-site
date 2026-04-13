@@ -258,7 +258,7 @@
 
     /* Italicise last name for a Fraunces personality touch */
     .hero-name em {
-      font-style: italic;
+      font-style: normal;
       color: var(--accent-primary);
     }
 
@@ -988,11 +988,10 @@
         <div>
           <!--
             TODO: To add your photo, replace the <div class="about-photo"> below with:
-            <img src="your-photo.jpg" alt="Ethan Chieng" style="width:200px;height:200px;border-radius:50%;object-fit:cover;border:2px solid var(--bg-subtle);" />
-            Make sure the image file is in the same folder as index.html.
           -->
-          <div class="about-photo"></div>
-          <p class="photo-label">[ your photo here ]</p>
+         <div style="width:200px;height:250px;border-radius:20px;overflow:hidden;border:1.5px solid var(--bg-subtle);flex-shrink:0;">
+            <img src="images/headshot.jpg" alt="Ethan Chieng" style="width:100%;height:100%;object-fit:cover;object-position:center top;transform:scale(1.5);transform-origin:center center;" />
+        </div>
         </div>
 
         <!-- Bio text -->
