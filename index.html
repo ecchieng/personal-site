@@ -14,7 +14,7 @@
   <!-- <link rel="canonical" href="https://yourdomain.com" /> -->
 
   <title>Ethan Chieng</title>
-    <link rel="icon" href="images/ho-oh.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicons/ho-oh.png" type="image/x-icon">
 
   <!-- Google Fonts: Fraunces (display/headings) + Lato (clean body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1005,7 +1005,7 @@
         <!-- Bio text -->
         <div class="about-text">
           <p>
-            Hi, I'm Ethan. I'm a bioengineering grad from UC Berkeley with a mix of expereience: clinical work in pediatrics, ML and empathy research, wet lab, and a bunch of teaching.
+            Hi, I'm Ethan. I'm a bioengineering graduate from UC Berkeley with a mix of expereience: clinical work in pediatrics, machiene learning and empathy research, wet lab, and a bunch of teaching.
           </p>
           <p>
             I care a lot about making complex things understandable and accessible, whether that's explaining a vaccine to a patient, debugging a model, or helping a student work through a tough ochem concept.
@@ -1373,7 +1373,7 @@
             <span class="hobby-emoji">🐕</span>
             <span class="hobby-placeholder-txt">[ add photo ]</span>
           </div>
-          <p class="hobby-name">My Dogs</p>
+          <p class="hobby-name">Hanging w/ my Dogs</p>
         </div>
 
         <div class="hobby-card" data-hobby="Reading" data-emoji="📖">
@@ -1381,15 +1381,15 @@
             <span class="hobby-emoji">📖</span>
             <span class="hobby-placeholder-txt">[ add photo ]</span>
           </div>
-          <p class="hobby-name">Reading</p>
+          <p class="hobby-name">Shows/Reading</p>
         </div>
 
-        <div class="hobby-card" data-hobby="Weightlifting" data-emoji="🏋️">
+        <div class="hobby-card" data-hobby="Being Active" data-emoji="🏋️">
           <div class="hobby-img-area">
             <span class="hobby-emoji">🏋️</span>
             <span class="hobby-placeholder-txt">[ add photo ]</span>
           </div>
-          <p class="hobby-name">Weightlifting</p>
+          <p class="hobby-name">Being Active</p>
         </div>
 
       </div>
@@ -1419,6 +1419,13 @@
               </svg>
               <a href="https://www.linkedin.com/in/ethan-chieng" target="_blank" rel="noopener">linkedin.com/in/ethan-chieng</a>
             </div>
+            <div class="contact-link-item">
+              <!-- GitHub icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+              </svg>
+              <a href="https://github.com/ecchieng" target="_blank" rel="noopener">github.com/ecchieng</a>
+            </div>
           </div>
         </div>
 
@@ -1442,7 +1449,7 @@
           </div>
           <div class="form-group">
             <label for="contact-message">Message</label>
-            <textarea id="contact-message" placeholder="Your cool message..."></textarea>
+            <textarea id="contact-message" placeholder="Your message here..."></textarea>
           </div>
           <button class="btn-submit" id="sendBtn">Send message →</button>
         </div>
@@ -1544,8 +1551,8 @@
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // ── Contact form → mailto ────────────────────────────────────
-    document.getElementById('sendBtn').addEventListener('click', () => {
+    // ── Contact form → Formspree ─────────────────────────────────
+    document.getElementById('sendBtn').addEventListener('click', async () => {
       const name    = document.getElementById('contact-name').value.trim();
       const email   = document.getElementById('contact-email').value.trim();
       const message = document.getElementById('contact-message').value.trim();
@@ -1555,12 +1562,26 @@
         return;
       }
 
-      // TODO: Replace ecchieng@gmail.com with whatever email you want to receive messages at
-      const to      = 'ecchieng@gmail.com';
-      const subject = encodeURIComponent(`Message from ${name} via your website`);
-      const body    = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
+      const btn = document.getElementById('sendBtn');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
 
-      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      const res = await fetch('https://formspree.io/f/xgorlnvz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+      });
+
+      if (res.ok) {
+        btn.textContent = 'Sent!';
+        document.getElementById('contact-name').value = '';
+        document.getElementById('contact-email').value = '';
+        document.getElementById('contact-message').value = '';
+      } else {
+        btn.textContent = 'Send message →';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again.');
+      }
     });
 
     // ── Scroll reveal ────────────────────────────────────────────
